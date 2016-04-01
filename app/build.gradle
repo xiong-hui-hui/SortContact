@@ -1,0 +1,32 @@
+
+apply plugin: 'com.android.application'  //声明为android程序，其他module则为com.android.library
+android {
+    compileSdkVersion 23        //编译版本
+    buildToolsVersion "23.0.2"  //build工具版本，在SDK Manager下载相应版本，也是导包不成功原因之一
+
+    defaultConfig { //默认配置
+        applicationId "com.xiong.sortcontact"  //包名
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes { //创建类型
+        release {
+            minifyEnabled false  //是否进行混淆
+            // 前一部分android默认的混淆文件，包含了基本的混淆声明，目录在 /tools/proguard/proguard-android.txt？
+            // 后一部分是我们项目里的自定义的混淆文件，声明一些第三方依赖的一些混淆规则，目录在 /app/proguard-rules.txt
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions{
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar']) //编译libs目录下所有jar包
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile project(':library') //编译这个项目除了app的其他模块，此处只要一个library
+}
